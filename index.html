@@ -3,338 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NUR SYAFINAZ's Student Bento Grid Landing Page - V4</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Lab Timer | Analysis Tool</title>
     <style>
-        /*
-         * --- CSS Variables ---
-         */
         :root {
-            --color-background: #f9fafb;
-            --color-card-bg: #ffffff;
-            --color-text-primary: #1f2937;
-            --color-text-secondary: #6b7280;
-            --color-accent: #0077b6;     /* Deep Ocean Blue (UMT Theme) */
-            --color-border: #e5e7eb;
-            --font-family-sans: 'Inter', sans-serif;
-            --border-radius: 12px;
-            --padding-base: 1.5rem;
-            --gap-base: 1rem;
+            --bg-color: #e3f2fd; /* Scientific Blue Light */
+            --card-bg: #ffffff;
+            --primary-color: #1976d2; /* Lab Blue */
+            --secondary-color: #90caf9;
+            --text-color: #2c3e50;
+            --accent-color: #cfd8dc;
+            --success-color: #2e7d32; /* Lab Green */
         }
 
-        /*
-         * --- Base Styles ---
-         */
         body {
-            font-family: var(--font-family-sans);
-            background-color: var(--color-background);
-            color: var(--color-text-primary);
-            line-height: 1.6;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-color);
         }
 
         .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
+            text-align: center;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 1px solid var(--secondary-color);
+            width: 320px;
         }
 
-        /*
-         * --- Bento Grid Layout ---
-         */
-        .bento-grid {
-            display: grid;
-            gap: var(--gap-base);
-            grid-template-columns: repeat(6, 1fr);
-            grid-auto-rows: minmax(150px, auto);
+        #lab-icon {
+            font-size: 8rem;
+            margin-bottom: 1rem;
+            display: block;
         }
 
-        .bento-card {
-            background-color: var(--color-card-bg);
-            border: 1px solid var(--color-border);
-            border-radius: var(--border-radius);
-            padding: var(--padding-base);
+        .timer-display {
+            font-size: 3.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            margin: 10px 0;
+            color: var(--primary-color);
+        }
+
+        .status-text {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            font-weight: bold;
+            color: #546e7a;
+        }
+
+        .controls {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-            cursor: pointer;
+            gap: 10px;
+            justify-content: center;
         }
 
-        /* Micro-interactions: Subtle Lift and Zoom */
-        .bento-card:hover {
-            border-color: var(--color-accent);
-            box-shadow: 0 10px 30px -5px rgba(0, 119, 182, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.05);
-            transform: translateY(-4px) scale(1.01);
-        }
-        .bento-card:focus {
-            outline: 2px solid var(--color-accent);
-            outline-offset: 2px;
-        }
-        .bento-card:active {
-            transform: translateY(-1px) scale(1.0);
-        }
-
-        /* Card-specific styling */
-        .card-title {
-            font-weight: 700;
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            color: var(--color-text-primary);
-        }
-
-        .card-subtitle {
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--color-text-primary);
-        }
-
-        .card-content {
-            font-size: 0.875rem;
-            color: var(--color-text-secondary);
-        }
-
-        /* Card 1: Profile (Large Box | 3 columns x 2 rows) - MODIFIED FOR BG IMAGE */
-        .card-profile {
-            grid-column: span 3;
-            grid-row: span 2;
-            
-            /* --- START: Background Image Implementation --- */
-            background-image: url('bg.jpg'); 
-            background-size: cover;         
-            background-position: center;    
-            /* Ensure text readability by blending a dark color over the image */
-            background-blend-mode: overlay;
-            background-color: rgba(0, 0, 0, 0.3); 
-            /* --- END: Background Image Implementation --- */
-        }
-        
-        /* Text Color Adjustments for readability over dark background */
-        .card-profile .profile-name, 
-        .card-profile .profile-program,
-        .card-profile .card-content {
-            color: white; 
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); 
-        }
-
-        .card-profile .social-links a {
-            color: #d1e5f0; /* Lightened grey/blue for links */
-        }
-        .card-profile .social-links a:hover {
-            color: var(--color-accent); 
-        }
-
-        /* Card 2: Location (3 columns x 1 row) */
-        .card-location {
-            grid-column: span 3;
-        }
-
-        /* Card 3: Tech Stack (3 columns x 1 row) */
-        .card-tech-stack {
-            grid-column: span 3;
-        }
-        .tech-list {
-            list-style: none;
-            padding: 0;
-            margin: 0.5rem 0 0 0;
+        .button-group {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .tech-list li {
-            background-color: var(--color-background);
-            color: var(--color-text-primary);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border: 1px solid var(--color-border);
+            gap: 10px;
+            justify-content: center;
         }
 
-        /* Card 4: Case Study (3 columns x 1 row) */
-        .card-case-study {
-            grid-column: span 3;
-        }
-        .case-study-badge {
-            display: inline-block;
-            background-color: var(--color-accent);
-            color: white;
-            padding: 4px 10px;
+        button, .app-link {
+            border: none;
+            padding: 10px 18px;
             border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
         }
+
+        #start-btn { background-color: var(--primary-color); color: white; }
+        #pause-btn { background-color: var(--accent-color); color: var(--text-color); }
+        #reset-btn { border: 1px solid var(--primary-color); background: transparent; color: var(--primary-color); }
         
-        /* Card 5: Hobby (2 columns x 1 row) */
-        .card-hobby {
-            grid-column: span 2;
+        /* New App Button Style */
+        .app-link {
+            background-color: var(--success-color);
+            color: white;
+            margin-top: 10px;
+            border: 1px solid transparent;
         }
 
-        /* Card 7: Reflection (4 columns x 1 row) */
-        .card-reflection {
-            grid-column: span 4;
+        button:hover, .app-link:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
-        /* Card 6: Playlist (6 columns x 1 row - spanning the width) */
-        .card-playlist {
-            grid-column: span 6;
-            background-color: #e0f2f7;
-            cursor: default;
-        }
-        .card-playlist:hover {
-            transform: none;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-            border-color: var(--color-border);
+        button:active, .app-link:active {
+            transform: translateY(1px);
         }
 
-        .playlist-content {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .playlist-icon {
-            font-size: 2rem;
-            color: var(--color-accent);
+        .analyzing {
+            animation: pulse 2s linear infinite;
         }
 
-
-        /*
-         * --- Responsiveness (Mobile Layout) ---
-         */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            .bento-grid {
-                grid-template-columns: 1fr;
-                grid-auto-rows: auto;
-                gap: 0.75rem;
-            }
-
-            .bento-card {
-                grid-column: span 1 !important;
-                grid-row: auto !important;
-                min-height: 120px;
-                padding: 1rem;
-            }
-
-            .card-profile {
-                min-height: 200px;
-                /* Ensure image scales down nicely on mobile */
-                background-size: cover;
-            }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
+    <a href="https://S78963.github.io" style="position:absolute; top:20px; left:20px; text-decoration: none; color: var(--primary-color); font-weight: bold;">← Back to Portfolio</a>
+
     <div class="container">
+        <span id="lab-icon">🧪</span>
+        <div class="status-text" id="status-msg">System Ready</div>
+        <div class="timer-display" id="timer">15:00</div>
         
-        <div class="bento-grid">
-
-            <div class="bento-card card-profile" tabindex="0">
-                <div>
-                    <h1 class="profile-name">NUR SYAFINAZ BINTI MUSA</h1>
-                    <p class="profile-program">B.Sc. Food Science (Food Technology) - Year 1</p>
-                    <p class="card-content">
-                        **Innovating food safety.** Exploring analytical techniques and foundational principles for a secure and sustainable food future.
-                    </p>
-                </div>
-                <div class="social-links">
-                    <a href="#" target="_blank">LinkedIn</a>
-                    <a href="#" target="_blank">GitHub</a>
-                    <a href="#" target="_blank">UMT Portal</a>
-                </div>
+        <div class="controls">
+            <div class="button-group">
+                <button id="start-btn">Start</button>
+                <button id="pause-btn">Pause</button>
+                <button id="reset-btn">Reset</button>
             </div>
-
-            <div class="bento-card card-location" tabindex="0">
-                <span role="img" aria-label="Location icon" style="font-size: 1.5rem;">📍</span>
-                <p class="card-subtitle">Current Location</p>
-                <h3 class="card-title">UMT, Kuala Nerus</h3>
-                <p class="card-content" id="current-time">Time: Loading...</p>
-            </div>
-
-            <div class="bento-card card-tech-stack" tabindex="0">
-                <p class="card-subtitle">Current Focus Areas</p>
-                <h3 class="card-title">Key Academic Subjects</h3>
-                <ul class="tech-list">
-                    <li>Food Chemistry</li>
-                    <li>Microbiology</li>
-                    <li>Excel</li>
-                    <li>Lab Analysis</li>
-                    <li>Food Technology</li>
-                </ul>
-            </div>
-
-            <div class="bento-card card-case-study" tabindex="0">
-                <span class="case-study-badge">FIRST YEAR LAB</span>
-                <h3 class="case-study-title">Starch Gelatinization in Local Kuih</h3>
-                <p class="card-content">
-                    Project focused on analyzing the rheological and texture profiles of *Kuih Lapis* to understand the impact of ingredient ratios and steaming time on final product quality.
-                </p>
-            </div>
-
-            <div class="bento-card card-hobby" tabindex="0">
-                <p class="card-subtitle">Relaxation & Wellness</p>
-                <h3 class="card-title">Evening Walks at Pantai UMT</h3>
-                <p class="card-content">
-                    Essential for stress relief and enjoying the natural environment around the campus.
-                </p>
-            </div>
-            
-            <div class="bento-card card-reflection" tabindex="0">
-                <p class="card-subtitle">Future Impact</p>
-                <h3 class="card-title">Why Food Tech Matters in Malaysia</h3>
-                <p class="card-content">
-                    Sustainable food security is crucial for our future. By optimizing local processing methods, we can reduce waste and improve nutrition across the nation.
-                </p>
-            </div>
-
-            <div class="bento-card card-playlist">
-                <div class="playlist-content">
-                    <span class="playlist-icon" role="img" aria-label="Music icon">🎶</span>
-                    <div class="playlist-info">
-                        <p class="card-subtitle" style="margin-bottom: 0;">Currently Listening To</p>
-                        <h3 class="card-title" style="margin-top: 0.25rem;">Focus-Boosting Lo-Fi Beats</h3>
-                        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/0R6KCq5TLJB3gi2ragMrXZ?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    </div>
-                    <button style="background-color: var(--color-accent); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: background-color 0.2s;">Play Now</button>
-                </div>
-            </div>
-
+            <a href="[PASTE YOUR APP URL HERE]" class="app-link">🚀 Try My Lab Timer App</a>
         </div>
     </div>
 
+    <audio id="finish-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
+
     <script>
-        function updateTime() {
-            const timeElement = document.getElementById('current-time');
-            const now = new Date();
-            const options = { 
-                timeZone: 'Asia/Kuala_Lumpur', 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit', 
-                hour12: true 
-            };
+        const DEFAULT_TIME = 15 * 60;
+        let timeLeft = DEFAULT_TIME;
+        let timerId = null;
+        
+        const labIcon = document.getElementById('lab-icon');
+        const timerDisplay = document.getElementById('timer');
+        const statusMsg = document.getElementById('status-msg');
+        const startBtn = document.getElementById('start-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const finishSound = document.getElementById('finish-sound');
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            document.title = `${timerDisplay.textContent} | Lab Timer`;
+        }
+
+        function startTimer() {
+            if (timerId) return;
             
-            try {
-                const ktTime = now.toLocaleTimeString('en-US', options);
-                timeElement.textContent = `Local Time (KT): ${ktTime}`;
-            } catch (e) {
-                const simpleTimeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-                timeElement.textContent = 'Time: ' + now.toLocaleTimeString('en-US', simpleTimeOptions);
+            labIcon.textContent = '🔬';
+            labIcon.classList.add('analyzing');
+            statusMsg.textContent = "Analyzing Samples...";
+            startBtn.disabled = true;
+
+            timerId = setInterval(() => {
+                timeLeft--;
+                updateDisplay();
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    timerId = null;
+                    labIcon.textContent = '✅';
+                    labIcon.classList.remove('analyzing');
+                    statusMsg.textContent = "Analysis Complete";
+                    finishSound.play();
+                    startBtn.disabled = false;
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerId);
+            timerId = null;
+            startBtn.disabled = false;
+            labIcon.classList.remove('analyzing');
+            if (timeLeft > 0 && timeLeft < DEFAULT_TIME) {
+                statusMsg.textContent = "Analysis Suspended";
             }
         }
 
-        updateTime();
-        setInterval(updateTime, 1000);
+        function resetTimer() {
+            pauseTimer();
+            timeLeft = DEFAULT_TIME;
+            updateDisplay();
+            labIcon.textContent = '🧪';
+            statusMsg.textContent = "System Ready";
+        }
+
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+
+        updateDisplay();
     </script>
 </body>
 </html>
